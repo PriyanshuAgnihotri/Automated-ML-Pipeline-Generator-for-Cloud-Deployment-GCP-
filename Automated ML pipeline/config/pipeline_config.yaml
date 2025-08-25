@@ -1,0 +1,40 @@
+pipeline:
+  name: "ml-pipeline"
+  version: "1.0"
+  
+data_processing:
+  input_path: "gs://your-bucket/raw_data/"
+  output_path: "gs://your-bucket/processed_data/"
+  preprocessing_steps:
+    - handle_missing_values: "mean"
+    - scale_features: "standard"
+    - encode_categorical: "one_hot"
+  
+training:
+  model_type: "xgboost"  # Options: xgboost, tensorflow, sklearn
+  hyperparameters:
+    learning_rate: 0.1
+    n_estimators: 100
+    max_depth: 6
+  training_data_path: "gs://your-bucket/processed_data/train/"
+  validation_data_path: "gs://your-bucket/processed_data/val/"
+  model_output_path: "gs://your-bucket/models/"
+  
+validation:
+  test_data_path: "gs://your-bucket/processed_data/test/"
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+  thresholds:
+    accuracy: 0.85
+    f1_score: 0.8
+  
+deployment:
+  platform: "ai_platform"  # Options: ai_platform, cloud_function
+  model_path: "gs://your-bucket/models/"
+  version: "v1"
+  runtime_version: "2.5"
+  python_version: "3.8"
+  region: "us-central1"

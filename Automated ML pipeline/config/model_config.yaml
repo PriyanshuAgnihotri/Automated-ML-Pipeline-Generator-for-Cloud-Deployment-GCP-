@@ -1,0 +1,23 @@
+models:
+  xgboost:
+    package: "xgboost"
+    class: "XGBClassifier"
+    required_parameters:
+      - n_estimators
+      - max_depth
+      - learning_rate
+  
+  tensorflow:
+    package: "tensorflow"
+    class: "Sequential"
+    required_parameters:
+      - layers
+      - optimizer
+      - loss
+  
+  sklearn:
+    package: "sklearn"
+    class: "RandomForestClassifier"
+    required_parameters:
+      - n_estimators
+      - max_depth
